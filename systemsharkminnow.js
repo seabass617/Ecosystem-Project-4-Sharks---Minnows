@@ -1,6 +1,4 @@
 class SystemSharkMinnow {
-  // is made up of fish
-  // those fish can be sharks or minnows
 
   constructor(){
     this.minnows = new Array;
@@ -8,40 +6,56 @@ class SystemSharkMinnow {
     this.repeller = new Repeller;
     this.populate();
     this.fishes = this.minnows.concat(this.sharks);
+    this.allowScareColor = true;
   }
 
+  //===================================================================================
+  // Populate Function: Populates the system with fish and a shark
+  //===================================================================================
   populate(){
-    for ( let i = 0; i < 300; i++ ){
+    for ( let i = 0; i < 250; i++ ){
       this.minnows.push(new Minnow(120,180,173));
     }
 
     this.sharks.push(new Shark(62,78,80));
   }
-
+  //===================================================================================
+  // Run Function: Repeated Every Frame
+  //===================================================================================
   run(){
+    // Apply the repelling effect of the shark to the minnows
     this.applyRepeller(this.sharks[0]);
-    //this.repeller.display();
+    
+    //Run all the fish in the system 
     this.fishes.forEach( fish => fish.run() );
-    //this.applyRepeller(this.repeller);
   }
 
+  //===================================================================================
+  // Apply Repeller Function: Sharks scare the minnows
+  //===================================================================================
   applyRepeller(shark){
-    // this.minnows.forEach( minnow => {
-    //   let force = repeller.repel(minnow);
-    //   if (force.mag() != 0){
-    //     minnow.applyForce(force);
-    //   }
-    // })
-     
     this.minnows.forEach( minnow => {
       let force = shark.scare(minnow);
+      //If they are in the radius, their force magnitude won't be zero, so apply that force and make it scared
       if (force.mag() != 0){
         minnow.applyForce(force);
-        minnow.isScared();
+        minnow.isScared(this.allowScareColor);
       } else {
         minnow.notScared();
       }
     })
   }
 
+  //===================================================================================
+  // Toggle Functions Associated with Buttons
+  //===================================================================================
+  toggleSharkScareRadius() {
+    this.sharks.forEach( shark => {
+      shark.toggleDrawRadius();
+    });
+  }
+
+  toggleScareColor() {
+    this.allowScareColor = this.allowScareColor === true ? false : true;
+  }
 }

@@ -5,9 +5,9 @@
 //Declare global variables
 //let minnows = new Array(100);
 let sharkminnowsystem;
-//let food;
 let clientWidth, clientHeight;
-//let foodSlider; 
+let scareRadiusSlider, scareIntensitySlider; 
+let radiusToggleButton, scareToggleButton;
 
 //===================================================================================
 // Responsiveness
@@ -32,23 +32,24 @@ function setup() {
 	canvas = createCanvas (clientWidth, clientHeight);
 	canvas.position(0,0);
 	canvas.style('z-index', '-10');
-	
-	// Creating Slider
-	//foodSlider = createSlider(2,10,.1);
-	//foodSlider.position(20,125);
-	
+
 	// Background Color
 	background(248,189,127);
 
-	// Creating an instance of the Fish object
-	//goldFish = new Fish();
-
+	// Creating an instance a shark minnow system
 	sharkminnowsystem = new SystemSharkMinnow();
 
-	// for (let i = 0; i < minnows.length; i++) {
-	// 	minnows[i] = new Minnow(120,180,173);
-	// }
-
+	// Creating Sliders/Buttons
+	scareRadiusSlider = createSlider(100,400,200,10);
+	scareRadiusSlider.position(20,50);
+	scareIntensitySlider = createSlider(100,500,200,10);
+	scareIntensitySlider.position(20,125);
+	radiusToggleButton = createButton('Toggle Scare Radius');
+	radiusToggleButton.position(20, 200);
+	radiusToggleButton.mousePressed(toggleScareRadius);
+	radiusToggleButton = createButton('Toggle Scare Color');
+	radiusToggleButton.position(20, 250);
+	radiusToggleButton.mousePressed(toggleScareColor);
 }
 
 //===================================================================================
@@ -59,37 +60,27 @@ function draw() {
 	background(248,189,127);
 
 	sharkminnowsystem.run();
-	
-	// for (let i = 0; i < minnows.length; i++){ 
-	// 	// If there is food on the screen, apply attractive force and display food
-	// 	if (food) {
-	// 		let f = food.calculateAttraction(minnows[i]); 
-	// 		minnows[i].applyForce(f); 
-	// 		food.display(); 
-	// 	} else {
-	// 		minnows[i].meander();
-	// 	}
 
-	// 	// Update the properties of the fish (acceleration, velocity, location) etc
-	// 	// And display the fish
-	// 	minnows[i].update(); 
-	// 	minnows[i].checkEdges();
-	// 	minnows[i].display();
-	// }
-
-	// // Text for slider	
-	// //fill(255);
-	// //textSize(16);
-	// //text('Food Size', 20, 120);
-	// //fill(255);
+	// Text for slider	
+	fill(255);
+	textSize(16);
+	text('Scare Radius', 35, 90);
+	fill(255);
+	textSize(16);
+	text('Scare Intensity', 35, 165);
+	fill(255);
 }
 
 //===================================================================================
-// Mouse Click Function
+// Toggle Functions: Used for buttons
 //===================================================================================
-// function mouseClicked(){
-	// Create food item at mouse click 
-	// food = new MinnowFood(mouseX, mouseY);
-// }
+function toggleScareRadius() {
+	sharkminnowsystem.toggleSharkScareRadius();
+}
+
+
+function toggleScareColor() {
+	sharkminnowsystem.toggleScareColor();
+}
 
 

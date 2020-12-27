@@ -6,59 +6,47 @@ class Shark extends Fish {
     this.mass = 5;
     this.tail = new Tail(this.fishRadius);
     this.topspeed = 3;
-    this.scareRadius = 200;
-	}
-
+    this.drawRadius = true;
+  }
+  
+  //===================================================================================
+  // Scare Function: Calculates the scare force of the shark
+  //===================================================================================
   scare(minnow) {
-    let scaleFactor = 300
+    // Calculate the force to scare the minnow
     let force = p5.Vector.sub(this.location, minnow.location);
     let distance = force.mag();
-    minnow.topspeed = this.mass;
-    minnow.topspeed = constrain(minnow.topspeed,1,10);
     force.normalize(); 
-    let strength = (-scaleFactor/ distance);
+    let strength = (-scareIntensitySlider.value()/ distance);
     
     // Stop when we get to the food
-    if (distance <= this.scareRadius) {
+    if (distance <= scareRadiusSlider.value()) {
        force.mult(strength);
-       minnow.changeColor(255,255,255);
     } else {
        force.mult(0);
     }
      // Return the force as a vector
     return force;
   }
-  // //===================================================================================
-  // // Update Function: All fish calculations will be processed here once per frame
-  // //===================================================================================
-	// update(){
-	// }
 
-  // //===================================================================================
-  // // Display Function: Used to display different components of the fish
-  // //===================================================================================
+  //===================================================================================
+  // Display Function: Used to display different components of the fish
+  //===================================================================================
   display(){
     super.display();
-    noFill();
-    stroke(255,255,255);
-    ellipse(this.location.x, this.location.y, this.scareRadius *2, this.scareRadius *2);
+    if (this.drawRadius){
+      noFill();
+      stroke(255,255,255);
+      ellipse(this.location.x, this.location.y, scareRadiusSlider.value() *2, scareRadiusSlider.value() *2);  
+    } 
   }
-  
-  // //===================================================================================
-  // // ApplyForce Method: Applies a force to the fish 
-  // //===================================================================================
-  // applyForce(force) {
-  // }
 
-  // //===================================================================================
-  // // Meander Method: Fish will randomly move around the screen 
-  // //===================================================================================
-  // meander(){
-  // }
-  // //===================================================================================
-  // // CheckEdges Method: Allows for the fish to wrap around edges of the viewport
-  // //===================================================================================
-	// checkEdges(){
-  // }
+  //===================================================================================
+  // Toggle Function: Used to toggle between drawing or not drawing the scare radius
+  //===================================================================================
+
+  toggleDrawRadius(){
+    this.drawRadius = this.drawRadius === true ? false : true;
+  }
 
 }

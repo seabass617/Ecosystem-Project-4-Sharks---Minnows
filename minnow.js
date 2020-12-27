@@ -2,43 +2,31 @@ class Minnow extends Fish {
 	
 	constructor(r,g,b){
     super(r,g,b);
+    this.topspeed = 2;
   }
-  
-  isScared(){
-    this.changeColor(255,255,255);
+
+  //===================================================================================
+  // Scare Functions: Will change color and speed of scared minnows
+  //===================================================================================
+  isScared(showscare){
+    // Conditional to allow for toggling of changing color or not
+    if (showscare){
+      this.changeColor(255,255,255);
+    }
+    this.topspeed = 5;
   }
 
   notScared(){
-    this.changeColor(120,180,173)
+    this.changeColor(120,180,173);
+    this.topspeed = 2;
+  }
+  
+  //===================================================================================
+  // Scare Functions: Will change color and speed of scared minnows
+  //===================================================================================
+  run(){
+    super.run();
   }
 
-  // //===================================================================================
-  // // Update Function: All fish calculations will be processed here once per frame
-  // //===================================================================================
-	// update(){
-	// }
-
-  // //===================================================================================
-  // // Display Function: Used to display different components of the fish
-  // //===================================================================================
-  // display(){
-  // }
-  
-  // //===================================================================================
-  // // ApplyForce Method: Applies a force to the fish 
-  // //===================================================================================
-  // applyForce(force) {
-  // }
-
-  // //===================================================================================
-  // // Meander Method: Fish will randomly move around the screen 
-  // //===================================================================================
-  // meander(){
-  // }
-  // //===================================================================================
-  // // CheckEdges Method: Allows for the fish to wrap around edges of the viewport
-  // //===================================================================================
-	// checkEdges(){
-  // }
 
 }
